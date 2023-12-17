@@ -17,7 +17,7 @@ public class MainFrame extends AbstractFrame {
     // components
     private MenuBar menuBar;
     private Menu fileMenu, eventMenu, addEventMenu, helpMenu;
-    private MenuItem fmJoin, fmExit, hmHelp, hmDev, emCoffee, emBlood, aemAA, aemBB;
+    private MenuItem fmJoin, fmExit, hmHelp, hmDev, emCoffee, emBlood, aemAA, aemBB, aemGame;
     private Image img;
 
     public MainFrame(){
@@ -53,6 +53,7 @@ public class MainFrame extends AbstractFrame {
         this.addEventMenu = new Menu("Add Event");
         this.aemAA = new MenuItem("Change Background");
         this.aemBB = new MenuItem("Mouse Location");
+        this.aemGame = new MenuItem("Game");
 
         this.helpMenu = new Menu("Help");
         this.hmHelp = new MenuItem("Program Introduction", new MenuShortcut('P', true));
@@ -61,7 +62,7 @@ public class MainFrame extends AbstractFrame {
         this.fileMenu.add(this.fmJoin); this.fileMenu.addSeparator(); this.fileMenu.add(this.fmExit);
         this.helpMenu.add(this.hmHelp); this.helpMenu.add(this.hmDev);
         this.eventMenu.add(emCoffee); this.eventMenu.add(emBlood);
-        this.addEventMenu.add(aemAA); this.addEventMenu.add(aemBB);
+        this.addEventMenu.add(aemAA); this.addEventMenu.add(aemBB); this.addEventMenu.add(aemGame);
         this.menuBar.add(this.fileMenu); this.menuBar.add(this.eventMenu); this.menuBar.add(this.addEventMenu); this.menuBar.add(this.helpMenu);
     }
     @Override
@@ -106,6 +107,12 @@ public class MainFrame extends AbstractFrame {
             @Override
             public void actionPerformed(ActionEvent e) { new MouseLocation(); }
         });
+        this.aemGame.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                new Game();
+            }
+        });
     }
 
     @Override
@@ -117,8 +124,7 @@ public class MainFrame extends AbstractFrame {
      * Main method to start
      */
     public static void main(String[] args) {
-//        MainFrame frame = new MainFrame();
-        Game g = new Game();
+        MainFrame frame = new MainFrame();
     }
 
 }

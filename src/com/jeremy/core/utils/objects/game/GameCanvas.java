@@ -3,6 +3,7 @@ package com.jeremy.core.utils.objects.game;
 import com.jeremy.core.constants.FontsNColors;
 
 import java.awt.*;
+import java.awt.event.*;
 import java.util.LinkedList;
 import java.util.Queue;
 
@@ -16,6 +17,7 @@ public class GameCanvas extends Canvas {
         this.title = GameConstants.Strings.READY;
         this.scoreStr = "";
         this.runTimeStr = "";
+        this.setFocusable(false);
     }
 
     @Override
