@@ -13,15 +13,15 @@ public class GameCanvas extends Canvas {
     private String runTimeStr, scoreStr, title;
     public GameCanvas() {
         this.initGame();
+        this.title = GameConstants.Strings.READY;
+        this.scoreStr = "";
+        this.runTimeStr = "";
     }
 
     @Override
     public void paint(Graphics g) {
         super.paint(g);
         g.fillRect(GameConstants.Floor.X, GameConstants.Floor.Y, GameConstants.Floor.WIDTH, GameConstants.Floor.HEIGHT);
-        this.title = GameConstants.Strings.READY;
-        this.scoreStr = "";
-        this.runTimeStr = "";
         drawPlayer(g);
         drawObstacles(g);
         drawTexts(g);
@@ -58,7 +58,7 @@ public class GameCanvas extends Canvas {
 
         width = infoMetrics.stringWidth(this.runTimeStr);
         height = infoMetrics.getHeight();
-        g.setColor(FontsNColors.Colors.lightGreen);
+        g.setColor(FontsNColors.Colors.green);
         g.setFont(FontsNColors.Fonts.textFont);
         g.drawString(this.runTimeStr, (this.getWidth() - width) / 2, 25);
 
@@ -68,7 +68,7 @@ public class GameCanvas extends Canvas {
     public void gameStartStr(int runTime, int score) {
         this.title = "";
         this.runTimeStr = GameConstants.Strings.RUNNING_TIME + (runTime / 1000) + "s";
-        this.scoreStr = GameConstants.Strings.SCORE + score + "points";
+        this.scoreStr = GameConstants.Strings.SCORE + score + " points";
         this.repaint();
     }
     public void gameOverStr() {

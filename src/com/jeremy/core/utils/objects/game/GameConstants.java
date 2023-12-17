@@ -33,7 +33,7 @@ public class GameConstants {
         public static final String RUNNING_TIME = "Running Time: ";
         public static final String SCORE = "Score: ";
         public static final String READY = "Press Enter To Start";
-        public static final String GAME_OVER = "Game Over";
+        public static final String GAME_OVER = "Game Over. Press Enter To Restart";
         public static final String PAUSE = "Press Enter To Resume";
     }
     public static final int SCREEN_WIDTH = 1200;
