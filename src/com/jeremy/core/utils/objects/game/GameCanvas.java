@@ -2,15 +2,14 @@ package com.jeremy.core.utils.objects.game;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.util.LinkedList;
-import java.util.PriorityQueue;
 import java.util.Queue;
+import java.util.Random;
 
 public class GameCanvas extends Canvas {
     private Player player;
     private Queue<Obstacle> obstacles;
+    private int additionalDist, lastAdded, speed;
     public GameCanvas() {
         this.initGame();
     }
@@ -26,6 +25,9 @@ public class GameCanvas extends Canvas {
         this.player = new Player();
         this.obstacles = new LinkedList<>();
         obstacles.offer(new Obstacle(0));
+        this.additionalDist = (int) (Math.random() * GameConstants.Obstacle.MAX_ADDITIONAL_DIST);
+        this.lastAdded = 0;
+        this.speed = GameConstants.Speed.DEFAULT_SPEED;
     }
 
     private void drawPlayer(Graphics g) {
@@ -37,8 +39,8 @@ public class GameCanvas extends Canvas {
         }
     }
     public void moveObstacles() {
-        this.obstacles.stream().forEach(obstacle -> {
-            obstacle.curCoord.x -= 1;
+        this.obstacles.forEach(obstacle -> {
+            obstacle.curCoord.x -= this.speed;
             obstacle.setBounds();
         });
         this.repaint();
@@ -61,15 +63,15 @@ public class GameCanvas extends Canvas {
     }
     public boolean jumpPlayer() {
         if (this.player.beenTop) {  // falling
-            this.player.jumpingH--;
-            this.player.curCoord.y++;
+            this.player.jumpingH -= this.speed;
+            this.player.curCoord.y += this.speed;
             if (this.player.jumpingH == 0) {
                 this.player.clear();
                 return true;
             }
         } else {  // rising
-            this.player.jumpingH++;
-            this.player.curCoord.y--;
+            this.player.jumpingH += this.speed;
+            this.player.curCoord.y -= this.speed;
             if (this.player.jumpingH == GameConstants.Player.JUMP_HEIGHT) this.player.beenTop = true;
         }
         this.repaint();
@@ -77,9 +79,7 @@ public class GameCanvas extends Canvas {
         return false;
     }
     public void clearGame() {
-        this.player.clear();
-        this.obstacles.clear();
-        this.obstacles.offer(new Obstacle(0));
+        this.initGame();
         repaint();
     }
     public boolean isJumping() {
@@ -87,5 +87,13 @@ public class GameCanvas extends Canvas {
     }
     public void startJump() {
         this.player.isJumping = true;
+    }
+    public void addObstacle() {
+        if (this.lastAdded > GameConstants.Obstacle.MIN_DIST + this.additionalDist) {
+            obstacles.offer(new Obstacle((int) (Math.random() * GameConstants.Obstacle.MAX_ADDITIONAL_HEIGHT)));
+            this.additionalDist = (int) (Math.random() * GameConstants.Obstacle.MAX_ADDITIONAL_DIST);
+            this.lastAdded = 0;
+        }
+        this.lastAdded += this.speed;
     }
 }

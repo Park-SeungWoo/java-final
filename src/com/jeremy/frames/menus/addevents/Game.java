@@ -15,18 +15,12 @@ public class Game extends AbstractFrame {
     private GameCanvas canvasComp;
     private boolean isPlaying;
     private int clearCnt;  // amount of successfully passed obstacles
+    private int runningTime;
     private Timer gameThread, jumpThread;
 
     /**
-     * speed rate로 장애물 하나 지나칠 때마다 default speed(0.5) - cnt * rate(0.01)해서 속도 빨라지게
-     * 일정 거리 e.g 300px 마다 장애물 한번씩 나오게
-     *  이때 random true or false로 나오거나 나오지 않게 하기
-     *  1/2면 안나올 확률이 너무 크니깐 ramdom숫자 0~1중 threshold를 0.35 정도로 둬 이상의 랜덤값나오면 장애물 추가
-     * 장애물 높이도 default height(50) + 10 * (0~3) 으로 주기
-     * 점프 높이는 100까지 찍고 다시 내려오도록
-     *
-     * 플레이어 점프와 장애물 움직임은 각각 다른 스레드로
-     * 메인 스레드는 주기적으로 충돌감지
+     * 시작 전, 플레이 중, 게임 오버 표시
+     * 난이도(스피드) 추가 -> clearcnt 10개 단위로 speed rate 1씩 추가
      */
 
     public Game() {
@@ -53,7 +47,6 @@ public class Game extends AbstractFrame {
 
     @Override
     protected void addComponentListener() {
-        // canvas에 interface 다 만들고, 여기서 입력 이벤트 받고, timer 돌리고, 인터페이스 호출하기
     }
 
     @Override
@@ -82,15 +75,16 @@ public class Game extends AbstractFrame {
     private void initGame() {
         this.isPlaying = false;
         this.clearCnt = 0;
+        this.runningTime = 0;
     }
     private void initThreads() {
-        gameThread = new Timer(5, new ActionListener() {
+        gameThread = new Timer(GameConstants.Speed.OBST_SPEED, new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                runningTime += GameConstants.Speed.OBST_SPEED;
                 canvasComp.moveObstacles();
                 if(canvasComp.checkPassed()) {
                     clearCnt++;
-                    System.out.println(clearCnt);
                 }
                 if(canvasComp.detectCollision()) {  // game over
                     // show label with score
@@ -99,9 +93,10 @@ public class Game extends AbstractFrame {
                     gameThread.stop();
                     jumpThread.stop();
                 }
+                canvasComp.addObstacle();
             }
         });
-        jumpThread = new Timer(5, new ActionListener() {
+        jumpThread = new Timer(GameConstants.Speed.JUMP_SPEED, new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 if(canvasComp.jumpPlayer()) {  // if jump done

@@ -13,10 +13,15 @@ public class GameConstants {
         public static final int DEFAULT_HEIGHT = 50;
         public static final int START_X = SCREEN_WIDTH;
         public static final int START_Y = Floor.Y - DEFAULT_HEIGHT;
+        public static final int MIN_DIST = 300;
+        public static final int MAX_ADDITIONAL_DIST = 200;
+        public static final int MAX_ADDITIONAL_HEIGHT = 30;
     }
     public static class Speed {
-        public static final double MAX_SPEED = 0;
-        public static final double SPEED_RATE = 0.01;
+        public static final double MAX_SPEED = 5;
+        public static final int DEFAULT_SPEED = 1;
+        public static final int JUMP_SPEED = 8;
+        public static final int OBST_SPEED = 5;
     }
     public static class Floor {
         public static final int WIDTH = SCREEN_WIDTH;
