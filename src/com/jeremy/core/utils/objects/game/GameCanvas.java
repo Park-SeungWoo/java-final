@@ -39,6 +39,7 @@ public class GameCanvas extends Canvas {
     public void moveObstacles() {
         this.obstacles.stream().forEach(obstacle -> {
             obstacle.curCoord.x -= 1;
+            obstacle.setBounds();
         });
         this.repaint();
     }
@@ -46,12 +47,7 @@ public class GameCanvas extends Canvas {
         Obstacle frontObs = this.obstacles.peek();
         if (frontObs == null) return false;
 
-        // obstacle의
-        return false;
-//
-//
-//        return this.player.curCoord.x + this.player.WIDTH >= frontObs.curCoord.x &&
-//                this.player.curCoord.y + this.player.HEIGHT >= frontObs.curCoord.y;
+        return this.player.hasCollision(frontObs);
     }
     public boolean checkPassed() {
         Obstacle frontObs = this.obstacles.peek();
@@ -77,6 +73,7 @@ public class GameCanvas extends Canvas {
             if (this.player.jumpingH == GameConstants.Player.JUMP_HEIGHT) this.player.beenTop = true;
         }
         this.repaint();
+        this.player.setBounds();
         return false;
     }
     public void clearGame() {
