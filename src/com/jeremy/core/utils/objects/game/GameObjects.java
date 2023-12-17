@@ -1,15 +1,28 @@
 package com.jeremy.core.utils.objects.game;
 
+import com.jeremy.core.constants.FontsNColors;
 import com.jeremy.core.utils.Coords;
+
+import java.awt.*;
+import java.lang.reflect.Field;
 
 public abstract class GameObjects {
     public final int WIDTH, HEIGHT;
     public Coords curCoord;
     public Coords topLeft;
     public Coords bottomRight;
+    public Color color;
     public GameObjects(int width, int height) {
         this.WIDTH = width;
         this.HEIGHT = height;
+
+        Field[] colors = FontsNColors.Colors.class.getFields();
+        int randIdx = (int) (Math.random() * 6) + 1;
+        try {
+            this.color = (Color) colors[randIdx].get(null);
+        } catch (IllegalAccessException ex) {
+            throw new RuntimeException(ex);
+        }
     }
     public final void setBounds() {
         this.topLeft = new Coords(this.curCoord.x, this.curCoord.y);

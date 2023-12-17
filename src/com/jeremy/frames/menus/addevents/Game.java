@@ -6,6 +6,7 @@ import com.jeremy.core.utils.objects.game.GameConstants;
 import com.jeremy.frames.AbstractFrame;
 
 import javax.swing.*;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
@@ -20,7 +21,6 @@ public class Game extends AbstractFrame {
 
     /**
      * 시작 전, 플레이 중, 게임 오버 표시
-     * 난이도(스피드) 추가 -> clearcnt 10개 단위로 speed rate 1씩 추가
      */
 
     public Game() {
@@ -66,6 +66,7 @@ public class Game extends AbstractFrame {
                     jumpThread.start();
                 } else if (key == KeyEvent.VK_ESCAPE & isPlaying) {  // esc -> stop game
                     isPlaying = false;
+                    canvasComp.stopGameStr();
                     gameThread.stop();
                     jumpThread.stop();
                 }
@@ -82,12 +83,15 @@ public class Game extends AbstractFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 runningTime += GameConstants.Speed.OBST_SPEED;
+                canvasComp.gameStartStr(runningTime, clearCnt);
                 canvasComp.moveObstacles();
                 if(canvasComp.checkPassed()) {
                     clearCnt++;
+                    if (clearCnt % GameConstants.LEVEL_INCREASE_RATE == 0) canvasComp.increaseLevel();
                 }
                 if(canvasComp.detectCollision()) {  // game over
                     // show label with score
+                    canvasComp.gameOverStr();
                     initGame();
                     canvasComp.clearGame();
                     gameThread.stop();
