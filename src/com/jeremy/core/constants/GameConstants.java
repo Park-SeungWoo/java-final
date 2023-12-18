@@ -3,7 +3,7 @@ package com.jeremy.core.constants;
 public class GameConstants {
     public static class Player {
         public static final int WIDTH = 50;
-        public static final int HEIGHT = 100;
+        public static final int HEIGHT = 50;
         public static final int X = 100;
         public static final int START_Y = Floor.Y - HEIGHT;
         public static final int JUMP_HEIGHT = 150;
@@ -19,7 +19,7 @@ public class GameConstants {
     }
     public static class Speed {
         public static final int INCREASE_CONDITION = 5;  // every these successful attempts, increase level
-        public static final double MAX_MOVE_SPEED = 5;  // pixel movement per frame
+        public static final double MAX_MOVE_SPEED = 5;  // pixel movement per frame (level)
         public static final int DEFAULT_MOVE_SPEED = 1;
         public static final int JUMP_SPEED_MSPF = 5;  // millisecond per frame
         public static final int OBST_SPEED_MSPF = 5;
