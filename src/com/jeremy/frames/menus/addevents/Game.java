@@ -2,7 +2,7 @@ package com.jeremy.frames.menus.addevents;
 
 import com.jeremy.core.constants.FontsNColors;
 import com.jeremy.core.utils.objects.game.GameCanvas;
-import com.jeremy.core.utils.objects.game.GameConstants;
+import com.jeremy.core.constants.GameConstants;
 import com.jeremy.frames.AbstractFrame;
 
 import javax.swing.*;
@@ -74,15 +74,15 @@ public class Game extends AbstractFrame {
         this.runningTime = 0;
     }
     private void initThreads() {
-        gameThread = new Timer(GameConstants.Speed.OBST_SPEED, new ActionListener() {
+        gameThread = new Timer(GameConstants.Speed.OBST_SPEED_MSPF, new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                runningTime += GameConstants.Speed.OBST_SPEED;
+                runningTime += GameConstants.Speed.OBST_SPEED_MSPF;
                 canvasComp.gameStartStr(runningTime, clearCnt);
                 canvasComp.moveObstacles();
                 if(canvasComp.checkPassed()) {
                     clearCnt++;
-                    if (clearCnt % GameConstants.LEVEL_INCREASE_RATE == 0) canvasComp.increaseLevel();
+                    if (clearCnt % GameConstants.Speed.INCREASE_CONDITION == 0) canvasComp.increaseLevel();
                 }
                 if(canvasComp.detectCollision()) {  // game over
                     // show label with score
@@ -95,7 +95,7 @@ public class Game extends AbstractFrame {
                 canvasComp.addObstacle();
             }
         });
-        jumpThread = new Timer(GameConstants.Speed.JUMP_SPEED, new ActionListener() {
+        jumpThread = new Timer(GameConstants.Speed.JUMP_SPEED_MSPF, new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 if(canvasComp.jumpPlayer()) {  // if jump done

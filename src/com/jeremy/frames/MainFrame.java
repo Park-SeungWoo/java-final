@@ -24,7 +24,7 @@ public class MainFrame extends AbstractFrame {
         this("Java Project 박승우");
     }
     public MainFrame(String title) {
-        super(title, 820, 603);
+        super(title, 1280, 720);
     }
 
     ////////////////////////// Methods
@@ -35,7 +35,7 @@ public class MainFrame extends AbstractFrame {
         this.setLayout(new FlowLayout());
         this.setIconImage(new ImageIcon("assets/icon.png").getImage());
 
-        this.img = tk.getImage("assets/awt.png");
+        this.img = tk.getImage("assets/developer_img.jpg");
     }
     @Override
     protected void setComponentsConfig() {

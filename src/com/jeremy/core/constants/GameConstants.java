@@ -1,4 +1,4 @@
-package com.jeremy.core.utils.objects.game;
+package com.jeremy.core.constants;
 
 public class GameConstants {
     public static class Player {
@@ -14,14 +14,15 @@ public class GameConstants {
         public static final int START_X = SCREEN_WIDTH;
         public static final int START_Y = Floor.Y - DEFAULT_HEIGHT;
         public static final int MIN_DIST = 350;
-        public static final int MAX_ADDITIONAL_DIST = 200;
-        public static final int MAX_ADDITIONAL_HEIGHT = 20;
+        public static final int MAX_ADDITIONAL_DIST = 200;  // default distance from last obstacle + random distance
+        public static final int MAX_ADDITIONAL_HEIGHT = 20;  // default height + random height
     }
     public static class Speed {
-        public static final double MAX_MOVE_SPEED = 5;
+        public static final int INCREASE_CONDITION = 5;  // every these successful attempts, increase level
+        public static final double MAX_MOVE_SPEED = 5;  // pixel movement per frame
         public static final int DEFAULT_MOVE_SPEED = 1;
-        public static final int JUMP_SPEED = 5;
-        public static final int OBST_SPEED = 5;
+        public static final int JUMP_SPEED_MSPF = 5;  // millisecond per frame
+        public static final int OBST_SPEED_MSPF = 5;
     }
     public static class Floor {
         public static final int WIDTH = SCREEN_WIDTH;
@@ -38,5 +39,4 @@ public class GameConstants {
     }
     public static final int SCREEN_WIDTH = 1200;
     public static final int SCREEN_HEIGHT = 500;
-    public static final int LEVEL_INCREASE_RATE = 5;
 }

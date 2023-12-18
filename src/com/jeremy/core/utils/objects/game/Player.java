@@ -1,5 +1,6 @@
 package com.jeremy.core.utils.objects.game;
 
+import com.jeremy.core.constants.GameConstants;
 import com.jeremy.core.utils.Coords;
 
 public class Player extends GameObjects{

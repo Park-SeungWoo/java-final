@@ -1,6 +1,7 @@
 package com.jeremy.core.utils.objects.game;
 
 import com.jeremy.core.constants.FontsNColors;
+import com.jeremy.core.constants.GameConstants;
 
 import java.awt.*;
 import java.util.LinkedList;
