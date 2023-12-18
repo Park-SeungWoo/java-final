@@ -6,7 +6,7 @@ https://github.com/Park-SeungWoo/java-final
 
 ---
 
-[//]: # (https://prod-files-secure.s3.us-west-2.amazonaws.com/a07a4c3c-20a8-47b0-af88-3215f7fe37dd/2c332ad5-6fe8-4f10-b6f8-d4861806246b/Screen_Recording_2023-12-18_at_9.32.02_PM.mov)
+https://github.com/Park-SeungWoo/java-final/assets/54872527/0badb59c-f63a-46e7-86b2-169fc20b6f33
 
 # Features
 
