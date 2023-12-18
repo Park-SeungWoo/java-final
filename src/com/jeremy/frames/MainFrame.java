@@ -14,11 +14,18 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
+import java.awt.image.ImageObserver;
+import java.io.File;
+import java.io.FilenameFilter;
+import java.util.List;
+
 public class MainFrame extends AbstractFrame {
     // components
     private MenuBar menuBar;
     private Menu fileMenu, eventMenu, addEventMenu, helpMenu;
-    private MenuItem fmJoin, fmExit, hmHelp, hmDev, emCoffee, emBlood, aemAA, aemBB, aemGame;
+    private MenuItem fmNew, fmExit, hmHelp, hmDev, emCoffee, emBlood, aemAA, aemBB, aemGame;
     private Image img;
     private TextField idComp, pwComp;
     private Label idLComp, pwLComp;
@@ -45,7 +52,7 @@ public class MainFrame extends AbstractFrame {
         this.menuBar = new MenuBar();
 
         this.fileMenu = new Menu("File");
-        this.fmJoin = new MenuItem("Join", new MenuShortcut('J', true));
+        this.fmNew = new MenuItem("New Background Image");
         this.fmExit = new MenuItem("Exit", new MenuShortcut('E', false));
 
         this.eventMenu = new Menu("Event");
@@ -92,7 +99,7 @@ public class MainFrame extends AbstractFrame {
         this.loginComp.setFont(FontsNColors.Fonts.buttonFont);
         this.loginComp.setBounds(btnCoords.x, btnCoords.y + ((btnHeight / 2) + lHeight + tfHeight + 30), btnWidth, btnHeight);
 
-        this.fileMenu.add(this.fmJoin); this.fileMenu.addSeparator(); this.fileMenu.add(this.fmExit);
+        this.fileMenu.add(this.fmNew); this.fileMenu.addSeparator(); this.fileMenu.add(this.fmExit);
         this.eventMenu.add(emCoffee); this.eventMenu.add(emBlood);
         this.addEventMenu.add(aemAA); this.addEventMenu.add(aemBB); this.addEventMenu.add(aemGame);
         this.helpMenu.add(this.hmHelp); this.helpMenu.add(this.hmDev);
@@ -101,6 +108,12 @@ public class MainFrame extends AbstractFrame {
     }
     @Override
     protected void addComponentListener() {
+        this.fmNew.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                setNewBackground();
+            }
+        });
         this.fmExit.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -153,6 +166,8 @@ public class MainFrame extends AbstractFrame {
                 validateUser();
             }
         });
+        this.idComp.addKeyListener(new EnterToLogin());
+        this.pwComp.addKeyListener(new EnterToLogin());
     }
 
     @Override
@@ -180,7 +195,40 @@ public class MainFrame extends AbstractFrame {
             return;
         }
         // alert
+        idComp.setText("");
+        pwComp.setText("");
+        idComp.requestFocus();
         JOptionPane.showMessageDialog(this, "Login Failed\nTry again");
+    }
+
+    private void setNewBackground() {
+        FileDialog fDialog = new FileDialog(this, "Open", FileDialog.LOAD);
+        fDialog.setVisible(true);
+        String path = fDialog.getDirectory() + fDialog.getFile();
+        if (!List.of("jpg", "jpeg", "png").contains(path.split("\\.")[1])) return;
+
+        this.img = tk.getImage(path);
+
+        // Use MediaTracker to wait until the image is fully loaded
+        MediaTracker tracker = new MediaTracker(this);
+        tracker.addImage(this.img, 0);
+        try {
+            tracker.waitForAll();
+        } catch (InterruptedException ignore) {}
+
+        this.setSize(this.img.getWidth(this), this.img.getHeight(this));
+        this.alignFrameToCenter();
+        this.repaint();
+    }
+
+    private class EnterToLogin extends KeyAdapter{
+        @Override
+        public void keyPressed(KeyEvent e) {
+            super.keyPressed(e);
+            if (e.getKeyCode() == KeyEvent.VK_ENTER){
+                validateUser();
+            }
+        }
     }
 
     /**

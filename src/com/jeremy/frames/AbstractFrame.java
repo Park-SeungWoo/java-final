@@ -11,8 +11,8 @@ import java.util.Arrays;
 
 public abstract class AbstractFrame extends Frame {
     protected final Toolkit tk = Toolkit.getDefaultToolkit();
-    protected final int frameW;
-    protected final int frameH;
+    protected int frameW;
+    protected int frameH;
     private PopupMenu popupMenu;
     private MenuItem closeM, devInfoM, programInfoM;
 
@@ -99,7 +99,7 @@ public abstract class AbstractFrame extends Frame {
     /**
      * Align frame to the center
      */
-    private void alignFrameToCenter() {
+    public void alignFrameToCenter() {
         Coords frameCoords = this.getCenterOfDimension(this.frameW, this.frameH);
         this.setBounds(frameCoords.x, frameCoords.y, frameW, frameH);
     }
@@ -158,6 +158,16 @@ public abstract class AbstractFrame extends Frame {
         menuField.setAccessible(true);
         MenuBar menuBar = (MenuBar) menuField.get(this);
         this.setMenuBar(menuBar);
+    }
+
+    /**
+     * override setSize
+     */
+    @Override
+    public void setSize(int width, int height) {
+        super.setSize(width, height);
+        this.frameW = width;
+        this.frameH = height;
     }
 
     /**
