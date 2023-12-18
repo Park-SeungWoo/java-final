@@ -1,12 +1,15 @@
-# About Project
-
-https://github.com/Park-SeungWoo/java-final
-
-# Demonstrate Video
+# Demonstration Video
 
 ---
 
-https://github.com/Park-SeungWoo/java-final/assets/54872527/0badb59c-f63a-46e7-86b2-169fc20b6f33
+### Full
+
+https://github.com/Park-SeungWoo/java-final/assets/54872527/bf5aa0f9-8b1f-44c5-99b1-fa47e20b268d
+
+### Game
+
+https://github.com/Park-SeungWoo/java-final/assets/54872527/b6d75753-4223-4519-b5f5-733cd72a146f
+
 
 # Features
 
