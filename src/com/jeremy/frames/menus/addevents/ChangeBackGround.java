@@ -60,13 +60,7 @@ public class ChangeBackGround extends AbstractFrame {
                     setBackground(FontsNColors.Colors.purple);
                     break;
                 case "Random":
-                    Field[] colors = FontsNColors.Colors.class.getFields();
-                    int randIdx = (int) (Math.random() * 7);
-                    try {
-                        setBackground((Color) colors[randIdx].get(null));
-                    } catch (IllegalAccessException ex) {
-                        throw new RuntimeException(ex);
-                    }
+                    setBackground(FontsNColors.Colors.getRandomColor());
                     break;
             }
         }

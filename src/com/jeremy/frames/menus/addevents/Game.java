@@ -6,7 +6,6 @@ import com.jeremy.core.utils.objects.game.GameConstants;
 import com.jeremy.frames.AbstractFrame;
 
 import javax.swing.*;
-import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
@@ -18,10 +17,6 @@ public class Game extends AbstractFrame {
     private int clearCnt;  // amount of successfully passed obstacles
     private int runningTime;
     private Timer gameThread, jumpThread;
-
-    /**
-     * 시작 전, 플레이 중, 게임 오버 표시
-     */
 
     public Game() {
         this("Game");

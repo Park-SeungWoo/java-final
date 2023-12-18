@@ -5,6 +5,9 @@ import com.jeremy.core.utils.Coords;
 
 import java.awt.*;
 import java.lang.reflect.Field;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 public abstract class GameObjects {
     public final int WIDTH, HEIGHT;
@@ -15,14 +18,7 @@ public abstract class GameObjects {
     public GameObjects(int width, int height) {
         this.WIDTH = width;
         this.HEIGHT = height;
-
-        Field[] colors = FontsNColors.Colors.class.getFields();
-        int randIdx = (int) (Math.random() * 6) + 1;
-        try {
-            this.color = (Color) colors[randIdx].get(null);
-        } catch (IllegalAccessException ex) {
-            throw new RuntimeException(ex);
-        }
+        this.color = FontsNColors.Colors.getRandomColor(List.of(FontsNColors.Colors.blue));
     }
     public final void setBounds() {
         this.topLeft = new Coords(this.curCoord.x, this.curCoord.y);
