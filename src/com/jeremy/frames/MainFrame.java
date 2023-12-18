@@ -1,5 +1,6 @@
 package com.jeremy.frames;
 
+import com.jeremy.core.utils.Coords;
 import com.jeremy.frames.menus.addevents.ChangeBackGround;
 import com.jeremy.frames.menus.addevents.Game;
 import com.jeremy.frames.menus.addevents.MouseLocation;
@@ -19,23 +20,24 @@ public class MainFrame extends AbstractFrame {
     private Menu fileMenu, eventMenu, addEventMenu, helpMenu;
     private MenuItem fmJoin, fmExit, hmHelp, hmDev, emCoffee, emBlood, aemAA, aemBB, aemGame;
     private Image img;
+    private TextField idComp, pwComp;
+    private Label idLComp, pwLComp;
+    private Button loginComp;
 
     public MainFrame(){
         this("Java Project 박승우");
     }
     public MainFrame(String title) {
-        super(title, 1280, 720);
+        super(title, 1280, 745);
     }
 
     ////////////////////////// Methods
     @Override
     protected void setFrameConfig() {
         super.setFrameConfig();
-        this.setBackground(FontsNColors.Colors.orange);
-        this.setLayout(new FlowLayout());
+        this.setBackground(FontsNColors.Colors.purple);
+        this.setLayout(null);
         this.setIconImage(new ImageIcon("assets/icon.png").getImage());
-
-        this.img = tk.getImage("assets/developer_img.jpg");
     }
     @Override
     protected void setComponentsConfig() {
@@ -59,11 +61,42 @@ public class MainFrame extends AbstractFrame {
         this.hmHelp = new MenuItem("Program Introduction", new MenuShortcut('P', true));
         this.hmDev = new MenuItem("Developer Introduction", new MenuShortcut('D', true));
 
+        int tfWidth = 200;
+        int tfHeight = 40;
+        int lWidth = 200;
+        int lHeight = 30;
+        int btnWidth = 200;
+        int btnHeight = 50;
+        Coords tfCoords = this.getCenterCoordinate(tfWidth, tfHeight, this.frameW, this.frameH);
+        Coords lCoords = this.getCenterCoordinate(lWidth, lHeight, this.frameW, this.frameH);
+        Coords btnCoords = this.getCenterCoordinate(btnWidth, btnHeight, this.frameW, this.frameH);
+
+        this.idLComp = new Label("ID");
+        this.idLComp.setFont(FontsNColors.Fonts.titleFont);
+        this.idLComp.setBounds(lCoords.x, lCoords.y - ((lHeight / 2) + tfHeight), lWidth, lHeight);
+
+        this.idComp = new TextField();
+        this.idComp.setFont(FontsNColors.Fonts.textFont);
+        this.idComp.setBounds(tfCoords.x, tfCoords.y - (tfHeight / 2), tfWidth, tfHeight);
+
+        this.pwLComp = new Label("PASSWORD");
+        this.pwLComp.setFont(FontsNColors.Fonts.titleFont);
+        this.pwLComp.setBounds(lCoords.x, lCoords.y + (lHeight / 2), lWidth, lHeight);
+
+        this.pwComp = new TextField();
+        this.pwComp.setFont(FontsNColors.Fonts.textFont);
+        this.pwComp.setBounds(tfCoords.x, tfCoords.y + ((tfHeight / 2) + lHeight), tfWidth, tfHeight);
+        this.pwComp.setEchoChar('*');
+
+        this.loginComp = new Button("Login");
+        this.loginComp.setFont(FontsNColors.Fonts.buttonFont);
+        this.loginComp.setBounds(btnCoords.x, btnCoords.y + ((btnHeight / 2) + lHeight + tfHeight + 30), btnWidth, btnHeight);
+
         this.fileMenu.add(this.fmJoin); this.fileMenu.addSeparator(); this.fileMenu.add(this.fmExit);
-        this.helpMenu.add(this.hmHelp); this.helpMenu.add(this.hmDev);
         this.eventMenu.add(emCoffee); this.eventMenu.add(emBlood);
         this.addEventMenu.add(aemAA); this.addEventMenu.add(aemBB); this.addEventMenu.add(aemGame);
-        this.menuBar.add(this.fileMenu); this.menuBar.add(this.eventMenu); this.menuBar.add(this.addEventMenu); this.menuBar.add(this.helpMenu);
+        this.helpMenu.add(this.hmHelp); this.helpMenu.add(this.hmDev);
+        this.menuBar.add(this.helpMenu);
     }
     @Override
     protected void addComponentListener() {
@@ -113,11 +146,40 @@ public class MainFrame extends AbstractFrame {
                 new Game();
             }
         });
+        this.loginComp.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                validateUser();
+            }
+        });
     }
 
     @Override
     public void paint(Graphics g){
         g.drawImage(this.img, 0, 25, this);
+    }
+
+    private void validateUser() {
+        String id = this.idComp.getText();
+        String pw = this.pwComp.getText();
+        if (id.equals("admin") && pw.equals("admin")){
+            // remove label, textfield, button
+            this.remove(this.idComp);
+            this.remove(this.pwComp);
+            this.remove(this.idLComp);
+            this.remove(this.pwLComp);
+            this.remove(this.loginComp);
+            // add menus to menubar
+            this.menuBar.remove(this.helpMenu);  // for the order
+            this.menuBar.add(this.fileMenu); this.menuBar.add(this.eventMenu); this.menuBar.add(this.addEventMenu); this.menuBar.add(this.helpMenu);
+            // draw background image
+            this.img = tk.getImage("assets/developer_img.jpg");
+            this.repaint();
+            this.validate();
+            return;
+        }
+        // alert
+        JOptionPane.showMessageDialog(this, "Login Failed\nTry again");
     }
 
     /**
