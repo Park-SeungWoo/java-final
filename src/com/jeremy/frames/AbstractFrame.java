@@ -37,12 +37,13 @@ public abstract class AbstractFrame extends Frame {
         this.addComponentListener();
 
         this.addPopupMenu();
-        this.addComponentsToFrame();
         try {
             this.addMenuBar();
         } catch (IllegalAccessException exception){
             throw new RuntimeException("Cannot access to menuBar field");
         } catch (NoSuchFieldException ignored) {}
+
+        this.addComponentsToFrame();
 
         this.setVisible(true);
     }
@@ -73,6 +74,15 @@ public abstract class AbstractFrame extends Frame {
     };
     protected abstract void setComponentsConfig();
     protected abstract void addComponentListener();
+    /**
+     * close method
+     */
+    public void closeWindow() {
+        if(this.getName().contains("MainFrame"))
+            System.exit(0);
+        else
+            this.dispose();
+    }
     /**
      * Get center coordinates of window dimension to align Frames or Components to the center
      */
@@ -148,15 +158,6 @@ public abstract class AbstractFrame extends Frame {
         menuField.setAccessible(true);
         MenuBar menuBar = (MenuBar) menuField.get(this);
         this.setMenuBar(menuBar);
-    }
-    /**
-     * close method
-     */
-    private void closeWindow() {
-        if(this.getName().contains("MainFrame"))
-            System.exit(0);
-        else
-            dispose();
     }
 
     /**

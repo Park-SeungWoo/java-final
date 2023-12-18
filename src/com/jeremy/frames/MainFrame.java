@@ -96,6 +96,7 @@ public class MainFrame extends AbstractFrame {
         this.eventMenu.add(emCoffee); this.eventMenu.add(emBlood);
         this.addEventMenu.add(aemAA); this.addEventMenu.add(aemBB); this.addEventMenu.add(aemGame);
         this.helpMenu.add(this.hmHelp); this.helpMenu.add(this.hmDev);
+
         this.menuBar.add(this.helpMenu);
     }
     @Override

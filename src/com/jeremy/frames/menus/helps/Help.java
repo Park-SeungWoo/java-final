@@ -1,14 +1,10 @@
 package com.jeremy.frames.menus.helps;
 
 import com.jeremy.frames.AbstractFrame;
-import com.jeremy.core.constants.FontsNColors;
 import javafx.application.Platform;
 import javafx.embed.swing.JFXPanel;
 import javafx.scene.Scene;
 import javafx.scene.web.WebView;
-
-import javax.swing.*;
-import java.awt.*;
 
 public class Help extends AbstractFrame {
     // components
@@ -23,7 +19,6 @@ public class Help extends AbstractFrame {
     @Override
     protected void setFrameConfig() {
         super.setFrameConfig();
-        this.setBackground(FontsNColors.Colors.orange);
         this.setLayout(null);
     }
     @Override
@@ -35,10 +30,14 @@ public class Help extends AbstractFrame {
     @Override
     protected void addComponentListener() {
     }
+    @Override
+    public void closeWindow() {
+        this.setVisible(false);  // dispose 되어 java fx thread가 종료 되면 runLater()을 다시 호출해도 다시 켜지지 않는 듯 그냥 set visible false로 해서 숨겨주니 잘 됨
+    }
     private void runWebView() {
         Platform.runLater(() -> {
             WebView webView = new WebView();
-            this.jfxPanelComp.setScene(new Scene(webView));
+            jfxPanelComp.setScene(new Scene(webView));
             webView.getEngine().load("https://jeremy-park.notion.site/About-Project-1389b5e5a1ad481f85b4d8bb12279540?pvs=4");
         });
     }
